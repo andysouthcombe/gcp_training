@@ -1,11 +1,11 @@
 from gcp_storage_helper import *
-from gcp_pubsub_helper import *
+from gcp_pubsub_publish_helper import *
 
 if __name__ == "__main__":
-
+    project_name = "gcp-learning-project-274814"
     target_bucket_name = "skating_inbound_bucket"
     source_file_path = "/home/andy/git/2018-02-olympic-figure-skating-analysis/data/"
-
+    topic_name = "projects/" + project_name + "/topics/andy_test"
     if not check_bucket_exists(target_bucket_name):
         create_bucket(target_bucket_name)
 
@@ -30,4 +30,9 @@ if __name__ == "__main__":
     for blob in bucket_contents:
         print(blob.name)
 
-    list_pubsub_topics()
+    topics = list_pubsub_topics(project_name)
+    for topic in topics:
+        print(topic.name)
+    if not check_pubsub_topic_exists(topic_name,project_name):
+        create_pubsub_topics(topic_name,project_name)
+
