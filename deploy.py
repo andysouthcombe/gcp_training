@@ -5,7 +5,9 @@ if __name__ == "__main__":
     project_name = "gcp-learning-project-274814"
     target_bucket_name = "skating_inbound_bucket"
     source_file_path = "/home/andy/git/2018-02-olympic-figure-skating-analysis/data/"
-    topic_name = "projects/" + project_name + "/topics/andy_test"
+    topic_name = "andy_test"
+    topic_path = "projects/" + project_name + "/topics/" + topic_name
+
     if not check_bucket_exists(target_bucket_name):
         create_bucket(target_bucket_name)
 
@@ -22,7 +24,7 @@ if __name__ == "__main__":
     for blob in bucket_contents:
         print(blob.name)
 
-    copy_file_pattern_to_bucket(target_bucket_name,source_file_path,"*.csv")
+    copy_file_pattern_to_bucket(target_bucket_name, source_file_path, "*.csv")
 
     bucket_contents = get_bucket_contents(target_bucket_name)
 
@@ -33,6 +35,6 @@ if __name__ == "__main__":
     topics = list_pubsub_topics(project_name)
     for topic in topics:
         print(topic.name)
-    if not check_pubsub_topic_exists(topic_name,project_name):
-        create_pubsub_topics(topic_name,project_name)
+    if not check_pubsub_topic_exists(topic_path, project_name):
+        create_pubsub_topics(topic_name, project_name)
 
